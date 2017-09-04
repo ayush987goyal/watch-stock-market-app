@@ -1,17 +1,35 @@
 <div class="container">
-  <div class="row">
+  <div class="header">
+    <div class="inner">
+      Watch Stock Market
+    </div>
+  </div>
+  <div class="row" style="margin-top: 20px">
+    <div style="display: block" class="col-md-11">
+      <canvas baseChart *ngIf="lineChartData && lineChartData.length > 0" [datasets]="lineChartData" [labels]="lineChartLabels"
+        chartType="line" #baseChart="base-chart"></canvas>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px">
     <div class="col-md-4">
       <form (ngSubmit)="onStockClick(f)" #f="ngForm">
         <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" id="name" class="form-control" name="name" ngModel required>
+          <label for="name">Updated real time with all clients</label>
+          <input type="text" id="name" class="form-control" name="name" placeholder="Stock Code" ngModel required>
           <span *ngIf="isInvalid" style=" color: red">Please enter a correct stock name</span>
         </div>
-        <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Submit</button>
+        <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Add</button>
       </form>
     </div>
-  </div>
-  <div class="row">
-    <p-chart type="line" [data]="chartData" *ngIf="chartData"></p-chart>
+    <div class="col-md-4" *ngFor="let stock of stockCards; let i = index">
+      <div class="card">
+        <div class="card-block">
+          <h3 class="card-title">{{stock.stockCode}}</h3>
+          <p class="card-text">{{stock.stockName}}</p>
+          <button class="btn btn-primary" (click)="onStockRemove(i)">Remove</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

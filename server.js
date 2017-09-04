@@ -6,23 +6,33 @@ var http = require('http');
 var app = express();
 var server = http.createServer(app);
 var io = require('socket.io')(server);
-var QUANDL_API_KEY = process.env.QUANDL_API_KEY;
-var FORGE_API_KEY = process.env.FORGE_API_KEY;
+
+var listOfStockData = [];
 
 app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, 'views/dist')));
 
 io.on('connection', (socket) => {
-    console.log("User connected");
+    // console.log("User connected");
 
     socket.on('disconnect', () => {
-        console.log('User disconnected');
+        // console.log('User disconnected');
     });
 
-    socket.on('add-message', (message) => {
-        io.emit('message', {type: 'new-message', text: message});
+    socket.on('add-stock', (data) => {
+        listOfStockData.push(data);
+        io.emit('stockAdded', {stockData: data});
+    });
+
+    socket.on('remove-stock', (index) => {
+        listOfStockData.splice(index, 1);
+        io.emit('stockRemoved', {stockIndex: index});
     });
 });
+
+app.get('/getStocks', (req, res) => {
+    res.send(listOfStockData);
+})
 
 app.get('/*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'views/dist/index.html'));

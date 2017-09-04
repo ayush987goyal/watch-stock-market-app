@@ -7,6 +7,8 @@ import { config } from '../environments/config';
 export class MarketDataService {
 
   QUANDL_API_KEY = config.QUANDL_API_KEY;
+  // localUrl: string = 'http://localhost:3000';
+  localUrl: string = '';
 
   constructor(private http: Http) { }
 
@@ -17,6 +19,12 @@ export class MarketDataService {
 
   getStockData(stock: string) {
     return this.http.get(this.getQuandlUrl(stock)).map(
+      (res) => { return res.json(); }
+    );
+  }
+
+  getAllStocks() {
+    return this.http.get(this.localUrl + '/getStocks').map(
       (res) => { return res.json(); }
     );
   }

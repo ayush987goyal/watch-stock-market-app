@@ -1,0 +1,12 @@
+.container {
+    margin-top: 20px;
+}
+
+.inner {
+  display: table;
+  margin: 0 auto;
+}
+
+.header {
+  font-size: 45px;
+}

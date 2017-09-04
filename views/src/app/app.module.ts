@@ -2,8 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
-import { ChartistModule } from 'ng-chartist';
-import { ChartModule } from 'primeng/primeng';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { AppComponent } from './app.component';
 import { MarketDataService } from './market-data.service';
@@ -19,8 +18,7 @@ import { HomeComponent } from './home/home.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    ChartistModule,
-    ChartModule
+    ChartsModule
   ],
   providers: [MarketDataService, SocketService],
   bootstrap: [AppComponent]
